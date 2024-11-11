@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import submitForm from '../js/functions';
 import '../styles/styles.css';
+
 function App() {
+    const [buttonText, setButtonText] = useState("Create job");
+    const [buttonColor, setButtonColor] = useState("#ffd700"); // Initial color
+
+    const handleSubmit = async () => {
+        const success = await submitForm();
+
+        if (success) {
+            setButtonText("Request is sent");
+            setButtonColor("red");
+        }
+    };
+
     return (
         <div id="app">
+            <h1>Create a Job</h1>
             <div className="form-grid">
+                {/* Client Details Section */}
                 <div className="form-section">
                     <h2>Client details</h2>
                     <input type="text" id="firstName" placeholder="First name"/>
@@ -13,6 +28,7 @@ function App() {
                     <input type="email" id="email" placeholder="Email (optional)"/>
                 </div>
 
+                {/* Job Details Section */}
                 <div className="form-section">
                     <h2>Job details</h2>
                     <select id="jobType">
@@ -35,6 +51,7 @@ function App() {
                     </select>
                 </div>
 
+                {/* Scheduled Section */}
                 <div className="form-section">
                     <h2>Scheduled</h2>
                     <input type="date" id="startDate"/>
@@ -46,7 +63,16 @@ function App() {
                 </div>
             </div>
 
-            <button onClick={submitForm}>Submit</button>
+            <div className="buttons-container">
+                <button
+                    className="create-job"
+                    style={{backgroundColor: buttonColor}}
+                    onClick={handleSubmit}
+                >
+                    {buttonText}
+                </button>
+                <button className="save-info">Save info</button>
+            </div>
         </div>
     );
 }

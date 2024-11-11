@@ -48,11 +48,14 @@ export default async function submitForm() {
 
         if (result.success) {
             alert("Data saved to Pipedrive successfully!");
+            return true;
         } else {
             alert("Failed to save data: " + (result.error || "Unknown error"));
+            return false;
         }
     } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while saving data.");
+        return false;
     }
 }
